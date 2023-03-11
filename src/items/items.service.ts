@@ -7,6 +7,12 @@ export class ItemsService {
   findAll(): Item[] {
     return this.items;
   }
+
+  findById(id: string): Item {
+    // itemが指定されたidのものと等しいならばtrueとなりreturnされる
+    return this.items.find((item) => item.id === id);
+
+  }
   create(item: Item): Item {
     this.items.push(item);
     return item;

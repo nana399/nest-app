@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 import { ItemsService } from './items.service';
@@ -9,6 +9,12 @@ export class ItemsController {
   @Get()
   findAll(): Item[] {
     return this.itemsService.findAll();
+  }
+
+  @Get(':id') // items/123 :をいれることでidの部分は可変であるとNestJSは理解してくれる
+  findById(@Param('id') id: string): Item {
+    return this.itemsService.findById(id);
+
   }
 
   @Post()
