@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
@@ -12,9 +12,12 @@ export class ItemsService {
   }
 
   findById(id: string): Item {
+    const found = this.items.find((item) => item.id === id);
+    if (!found) {
+      throw new NotFoundException();
+    }
     // itemが指定されたidのものと等しいならばtrueとなりreturnされる
-    return this.items.find((item) => item.id === id);
-
+    return found;
   }
   create(createItemDto: CreateItemDto): Item {
     const item: Item = {
